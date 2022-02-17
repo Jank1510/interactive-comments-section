@@ -1,0 +1,120 @@
+<main>
+    <div class="Content">
+        <div class="">
+            <div class="seccionComent">
+                <div class="score">
+                    <img [ngStyle]="{'filter':filterMasRoobson}" (click)="ScoreMasAmyrobson()" src="../assets/images/icon-plus.svg" alt="icon-plus">
+                    <p>{{scoreNumberRobson}}</p>
+                    <img [ngStyle]="{'filter':filterMenosRobson}" (click)="ScoreMenosAmyrobson()" src="../assets/images/icon-minus.svg" alt="icon-minus">
+                </div>
+                <div class="coment">
+                    <div class="cabeceraComent">
+                        <img class="itemCabecera" src="../assets/{{this.dataJson.comments[0].user.image.png}}" alt="Perfil">
+                        <p class="itemCabecera username">{{this.dataJson.comments[0].user.username}}</p>
+                        <p class="itemCabecera">{{this.dataJson.comments[0].createdAt}}</p>
+                        <div (click)="Replyamyrobson()" class="itemCabecera reply">
+                            <img src="../assets/images/icon-reply.svg" alt="icon-reply">
+                            <p>{{replyNoreply}}</p>
+                        </div>
+                    </div>
+                    <div class="txtComent">
+                        <p>
+                            {{this.dataJson.comments[0].content}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Comentario a publicar para Amyrobson-->
+            <div [ngStyle]="{'animation-name': animationComentar}" class="repley PublicarComent" *ngIf="repleyamyrobson">
+                <img src="../assets/images/avatars/image-juliusomo.png" alt="Perfil">
+                <textarea [(ngModel)]="inputAmyrobsontxt" name="cajaTextoamyrobson" id="cajaTextoamyrobson" cols="10" rows="10" placeholder="Add a comment..."></textarea>
+                <button (click)="PublicarComentarioamyrobson()">Reply</button>
+            </div>
+            <!-- Comentario Publicado para Amyrobson-->
+            <div class="contenedorDerespuestaComentario" *ngIf="comentariopublicadoamyrobson">
+                <span class="linea"></span>
+                <div [ngStyle]="{'animation-name':animationComentarioPublicadoEliminado}" class="comentPublicado seccionComent">
+                    <div class="score">
+                        <img src="../assets/images/icon-plus.svg" alt="icon-plus">
+                        <p>{{this.dataJson.comments[0].score}}</p>
+                        <img src="../assets/images/icon-minus.svg" alt="icon-minus">
+                    </div>
+                    <div class="coment">
+                        <div class="cabeceraComent">
+                            <img class="itemCabecera" src="../assets/{{this.dataJson.currentUser.image.png}}" alt="Perfil">
+                            <p class="itemCabecera username">{{this.dataJson.currentUser.username}}</p>
+                            <p class="itemCabecera you">you</p>
+                            <p class="itemCabecera"></p>
+                            <div class="itemCabecera replyComentarioPublicado">
+                                <div (click)="alertaEliminaramyrobson()" class="delete opcionUser" [ngStyle]="{'opacity':opacity}">
+                                    <img src="../assets/images/icon-delete.svg" alt="icon-delete">
+                                    <p>Delete</p>
+                                </div>
+                                <div (click)="comentarioEnActualizacionamyrobson=true;comentarioVisibleamyrobson=false" class="edit opcionUser" [ngStyle]="{'opacity':opacity}">
+                                    <img src="../assets/images/icon-edit.svg" alt="icon-edit">
+                                    <p>Edit</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Comentario publicado-->
+                        <div class="txtComent" *ngIf="comentarioVisibleamyrobson">
+                            <p>
+                                <span class="PrimeraPalabraTexto">{{etiquetaParrafo}}</span>{{this.inputAmyrobsontxt}}
+                            </p>
+                        </div>
+                        <!-- Actualizacion del comentario 'edit'-->
+                        <div class="updatetxt" *ngIf="comentarioEnActualizacionamyrobson">
+                            <textarea class="textareaActualizacion" [(ngModel)]="inputAmyrobsontxt" name="cajaTextoamyrobson" id="cajaTextoamyrobson" cols="10" rows="10"></textarea>
+                            <button (click)="updateamyrobson()">UPDATE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="seccionComent">
+                <div class="score">
+                    <img src="../assets/images/icon-plus.svg" alt="icon-plus">
+                    <p>{{this.dataJson.comments[1].score}}</p>
+                    <img src="../assets/images/icon-minus.svg" alt="icon-minus">
+                </div>
+                <div>
+                    <div class="cabeceraComent">
+                        <img class="itemCabecera" src="../assets/{{this.dataJson.comments[1].user.image.png}}" alt="Perfil">
+                        <p class="itemCabecera username">{{this.dataJson.comments[1].user.username}}</p>
+                        <p class="itemCabecera"></p>
+                        <div (click)="Replymaxblagun()" class="itemCabecera reply">
+                            <img src="../assets/images/icon-reply.svg" alt="icon-reply">
+                            <p>Reply</p>
+                        </div>
+                    </div>
+                    <div class="txtComent">
+                        <p>
+                            {{this.dataJson.comments[1].content}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="repley">
+
+            </div>
+        </div>
+
+        <div class="PublicarComent">
+            <img src="../assets/images/avatars/image-juliusomo.png" alt="Perfil">
+            <input id="txtbox1" type="text" placeholder="Add a comment...">
+            <button (click)="PublicarComentario()">SEND</button>
+        </div>
+    </div>
+    <!--Alerta de eliminar mensaje-->
+    <div [ngStyle]="{'animation-name':animationFondoAlert}" class="mensajeAlvertencia" *ngIf="ventanaAlerta">
+
+        <div [ngStyle]="{'animation-name':animationAlert}" class="tarjeta">
+            <p class="titleAlert">Delete comment</p>
+            <p class="parafoAlert">Are you want to delete this comment? Thid will remove the comment and can't be undone
+            </p>
+            <button (click)="cancelarAlert()" Class="cancelAlert">NO, CANCEL</button>
+            <button (click)="DeleteAlert()" class="deleteAlert">YES, DELETE</button>
+        </div>
+    </div>
+</main>

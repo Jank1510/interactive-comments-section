@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+    font-family: 'Rubik', sans-serif;
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+    background-color: hsl(228, 33%, 97%);
+}
