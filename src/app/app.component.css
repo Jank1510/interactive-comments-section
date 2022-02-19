@@ -4,7 +4,7 @@ main {
 }
 
 .Content {
-    padding-top: 10rem;
+    padding-top: 10vh;
 }
 
 .seccionComent {
@@ -88,6 +88,10 @@ main {
     margin-right: 1rem;
 }
 
+.repleyRespuesta {
+    margin-left: 2.5rem;
+}
+
 .reply {
     display: flex;
     flex-direction: row;
@@ -143,7 +147,7 @@ main {
     flex-direction: row;
     padding: 1.2rem;
     background-color: white;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     border-radius: 1rem;
     z-index: 0;
     position: relative;
@@ -226,10 +230,10 @@ textarea {
 
 @keyframes AnimationComentPublicado {
     from {
-        margin-left: -2.5rem;
+        margin-top: -9rem;
     }
     to {
-        margin-left: 2.5rem;
+        margin-top: 0rem;
     }
 }
 
@@ -247,7 +251,7 @@ textarea {
 .comentPublicado {
     margin-left: 2.5rem;
     width: 100%;
-    animation-duration: 0.7s;
+    animation-duration: 0.5s;
     position: relative;
     z-index: 0;
 }
@@ -266,6 +270,11 @@ textarea {
     margin-top: 1rem;
     margin-left: 2.2rem;
     width: 2.5px;
+}
+
+.seccionComentarioLineaMaxblagun {
+    display: flex;
+    flex-direction: row;
 }
 
 
@@ -410,4 +419,9 @@ textarea {
 
 .updatetxt button:hover {
     opacity: 35%;
+}
+
+.ramsesmiro {
+    position: relative;
+    z-index: 1;
 }
