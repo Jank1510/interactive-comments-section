@@ -1,4 +1,8 @@
 <main>
+    <div class="storage">
+        <img (click)="openLocalstorage()" src="../assets/images/icon-hamburger.svg" alt="Menu">
+        <button (click)="butonLocalstorage()" *ngIf="localstorage">Restart</button>
+    </div>
     <div class="Content">
         <!--Amyrobson-->
         <div class="">
@@ -36,16 +40,16 @@
                 <span class="linea"></span>
                 <div [ngStyle]="{'animation-name':animationComentarioPublicadoEliminado}" class="comentPublicado seccionComent">
                     <div class="score">
-                        <img src="../assets/images/icon-plus.svg" alt="icon-plus">
-                        <p>0</p>
-                        <img src="../assets/images/icon-minus.svg" alt="icon-minus">
+                        <img [ngStyle]="{'filter':filterMasjuliusomo1}" (click)="ScoreMasjuliusomo1()" src="../assets/images/icon-plus.svg" alt="icon-plus">
+                        <p>{{scorejuliusomo1}}</p>
+                        <img [ngStyle]="{'filter':filterMenosjuliusomo1}" (click)="ScoreMenosjuliusomo1()" src="../assets/images/icon-minus.svg" alt="icon-minus">
                     </div>
                     <div class="coment">
                         <div class="cabeceraComent">
                             <img class="itemCabecera" src="../assets/{{this.dataJson.currentUser.image.png}}" alt="Perfil">
                             <p class="itemCabecera username">{{this.dataJson.currentUser.username}}</p>
                             <p class="itemCabecera you">you</p>
-                            <p class="itemCabecera"></p>
+                            <p class="itemCabecera">{{tiempoPublicado}}</p>
                             <div class="itemCabecera replyComentarioPublicado">
                                 <div (click)="alertaEliminaramyrobson()" class="delete opcionUser" [ngStyle]="{'opacity':opacity}">
                                     <img src="../assets/images/icon-delete.svg" alt="icon-delete">
@@ -87,9 +91,9 @@
                         <p class="itemCabecera">{{this.dataJson.comments[1].createdAt}}</p>
 
                         <p class="itemCabecera"></p>
-                        <div (click)="Replymaxblagun()" class="itemCabecera reply">
+                        <div (click)="ReplyMaxblagun()" class="itemCabecera reply">
                             <img src="../assets/images/icon-reply.svg" alt="icon-reply">
-                            <p>Reply</p>
+                            <p>{{replyNoreplyMaxblagun}}</p>
                         </div>
                     </div>
                     <div class="txtComent">
@@ -98,8 +102,55 @@
                         </p>
                     </div>
                 </div>
+
             </div>
             <!--Respuestas de Maxblagun-->
+            <!-- Comentario a publicar para Maxblagun-->
+            <div [ngStyle]="{'animation-name': animationComentarMaxblagun}" class="repley PublicarComent" *ngIf="repleyMaxblagun">
+                <img src="../assets/images/avatars/image-juliusomo.png" alt="Perfil">
+                <textarea [(ngModel)]="inputMaxblaguntxt" name="cajaTextoMaxblagun" id="cajaTextoMaxblagun" cols="10" rows="10" placeholder="Add a comment..."></textarea>
+                <button (click)="PublicarComentarioMaxblagun()">Reply</button>
+            </div>
+            <!-- Comentario Publicado para Maxblagun-->
+            <div class="contenedorDerespuestaComentario" *ngIf="comentariopublicadoMaxblagun">
+                <span class="linea"></span>
+                <div [ngStyle]="{'animation-name':animationComentarioPublicadoEliminadoMaxblagun}" class="comentPublicado seccionComent">
+                    <div class="score">
+                        <img [ngStyle]="{'filter':filterMasJuliusomo4}" (click)="ScoreMasJuliusomo4()" src="../assets/images/icon-plus.svg" alt="icon-plus">
+                        <p>{{scoreNumberJuliusomo4}}</p>
+                        <img [ngStyle]="{'filter':filterMenosJuliusomo4}" (click)="ScoreMenosJuliusomo4()" src="../assets/images/icon-minus.svg" alt="icon-minus">
+                    </div>
+                    <div class="coment">
+                        <div class="cabeceraComent">
+                            <img class="itemCabecera" src="../assets/{{this.dataJson.currentUser.image.png}}" alt="Perfil">
+                            <p class="itemCabecera username">{{this.dataJson.currentUser.username}}</p>
+                            <p class="itemCabecera you">you</p>
+                            <p class="itemCabecera">{{tiempoPublicadoMaxblagun}}</p>
+                            <div class="itemCabecera replyComentarioPublicado">
+                                <div (click)="alertaEliminarMaxblagun()" class="delete opcionUser" [ngStyle]="{'opacity':opacityMaxblagun}">
+                                    <img src="../assets/images/icon-delete.svg" alt="icon-delete">
+                                    <p>Delete</p>
+                                </div>
+                                <div (click)="comentarioEnActualizacionMaxblagun=true;comentarioVisibleMaxblagun=false" class="edit opcionUser" [ngStyle]="{'opacity':opacityMaxblagun}">
+                                    <img src="../assets/images/icon-edit.svg" alt="icon-edit">
+                                    <p>Edit</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Comentario publicado-->
+                        <div class="txtComent" *ngIf="comentarioVisibleMaxblagun">
+                            <p>
+                                <span class="PrimeraPalabraTexto">{{etiquetaParrafoMaxblagun}}</span>{{this.inputMaxblaguntxt}}
+                            </p>
+                        </div>
+                        <!-- Actualizacion del comentario 'edit'-->
+                        <div class="updatetxt" *ngIf="comentarioEnActualizacionMaxblagun">
+                            <textarea class="textareaActualizacion" [(ngModel)]="inputMaxblaguntxt" name="cajaTextoMaxblagun" id="cajaTextoMaxblagun" cols="10" rows="10"></textarea>
+                            <button (click)="updateMaxblagun()">UPDATE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="seccionComentarioLineaMaxblagun">
                 <!--respuesta de remsesmiro-->
                 <span class="linea"></span>
@@ -115,7 +166,8 @@
                             <div>
                                 <div class="cabeceraComent">
                                     <img class="itemCabecera" src="../assets/{{this.dataJson.comments[1].replies[0].user.image.png}}" alt="Perfil">
-                                    <p class="itemCabecera username">{{this.dataJson.comments[1].replies[0].user.username}}
+                                    <p class="itemCabecera username">
+                                        {{this.dataJson.comments[1].replies[0].user.username}}
                                     </p>
                                     <p class="itemCabecera">{{this.dataJson.comments[1].replies[0].createdAt}}</p>
 
@@ -143,16 +195,16 @@
                     <div class="contenedorDerespuestaComentario" *ngIf="comentariopublicadoremsesmiro">
                         <div [ngStyle]="{'animation-name':animationComentarioPublicadoEliminadoremsesmiro}" class="comentPublicado seccionComent">
                             <div class="score">
-                                <img src="../assets/images/icon-plus.svg" alt="icon-plus">
-                                <p>0</p>
-                                <img src="../assets/images/icon-minus.svg" alt="icon-minus">
+                                <img [ngStyle]="{'filter':filterMasJuliusomo2}" (click)="ScoreMasJuliusomo2()" src="../assets/images/icon-plus.svg" alt="icon-plus">
+                                <p>{{scoreNumberJuliusomo2}}</p>
+                                <img [ngStyle]="{'filter':filterMenosJuliusomo2}" (click)="ScoreMenosJuliusomo2()" src="../assets/images/icon-minus.svg" alt="icon-minus">
                             </div>
                             <div class="coment">
                                 <div class="cabeceraComent">
                                     <img class="itemCabecera" src="../assets/{{this.dataJson.currentUser.image.png}}" alt="Perfil">
                                     <p class="itemCabecera username">{{this.dataJson.currentUser.username}}</p>
                                     <p class="itemCabecera you">you</p>
-                                    <p class="itemCabecera"></p>
+                                    <p class="itemCabecera">{{tiempoPublicadoRemsesmiro}}</p>
                                     <div class="itemCabecera replyComentarioPublicado">
                                         <div (click)="alertaEliminarremsesmiro()" class="delete opcionUser" [ngStyle]="{'opacity':opacityremsesmiro}">
                                             <img src="../assets/images/icon-delete.svg" alt="icon-delete">
@@ -190,16 +242,17 @@
                             <div class="coment">
                                 <div class="cabeceraComent">
                                     <img class="itemCabecera" src="../assets/{{this.dataJson.comments[1].replies[1].user.image.png}}" alt="Perfil">
-                                    <p class="itemCabecera username">{{this.dataJson.comments[1].replies[1].user.username}}</p>
-                                    <p class="itemCabecera">{{this.dataJson.comments[1].replies[1].createdAt}}</p>
+                                    <p class="itemCabecera username">
+                                        {{this.dataJson.comments[1].replies[1].user.username}}</p>
                                     <p class="itemCabecera you">you</p>
-                                    <p class="itemCabecera"></p>
+
+                                    <p class="itemCabecera">{{this.dataJson.comments[1].replies[1].createdAt}}</p>
                                     <div class="itemCabecera replyComentarioPublicado">
-                                        <div (click)="alertaEliminarJuliusomo3()" class="delete opcionUser" [ngStyle]="{'opacity':opacityremsesmiro}">
+                                        <div (click)="alertaEliminarJuliusomo3()" class="delete opcionUser">
                                             <img src="../assets/images/icon-delete.svg" alt="icon-delete">
                                             <p>Delete</p>
                                         </div>
-                                        <div (click)="comentarioEnActualizacionJuliusomo3=true;comentarioVisibleJuliusomo3=false" class="edit opcionUser" [ngStyle]="{'opacity':opacityremsesmiro}">
+                                        <div (click)="comentarioEnActualizacionJuliusomo3=true;comentarioVisibleJuliusomo3=false" class="edit opcionUser">
                                             <img src="../assets/images/icon-edit.svg" alt="icon-edit">
                                             <p>Edit</p>
                                         </div>
@@ -223,16 +276,52 @@
                 </div>
 
             </div>
-
-            <div class="repley">
-
-            </div>
         </div>
 
-        <div class="PublicarComent">
-            <img src="../assets/images/avatars/image-juliusomo.png" alt="Perfil">
-            <input id="txtbox1" type="text" placeholder="Add a comment...">
-            <button>SEND</button>
+        <div>
+            <div class="PublicarComent textareaGeneral publicarGeneral" *ngIf="textareaGeneral">
+                <img src="../assets/images/avatars/image-juliusomo.png" alt="Perfil">
+                <textarea [(ngModel)]="inputGeneraltxt" name="textarea" id="txtbox1" cols="30" rows="10"></textarea>
+                <button (click)="PublicarComentGeneral()">SEND</button>
+            </div>
+
+            <!-- Comentario Publicado General-->
+            <div class="contenedorDerespuestaComentario" *ngIf="comentariopublicadoGeneral">
+                <div [ngStyle]="{'animation-name':animationComentarioPublicadoEliminadoGeneral}" class="comentPublicado seccionComent cometnGeneral">
+                    <div class="score">
+                        <img [ngStyle]="{'filter':filterMasGeneral}" (click)="ScoreMasGeneral()" src="../assets/images/icon-plus.svg" alt="icon-plus">
+                        <p>{{scoreGeneral}}</p>
+                        <img [ngStyle]="{'filter':filterMenosGeneral}" (click)="ScoreMenosGeneral()" src="../assets/images/icon-minus.svg" alt="icon-minus">
+                    </div>
+                    <div class="coment">
+                        <div class="cabeceraComent">
+                            <img class="itemCabecera" src="../assets/{{this.dataJson.currentUser.image.png}}" alt="Perfil">
+                            <p class="itemCabecera username">{{this.dataJson.currentUser.username}}</p>
+                            <p class="itemCabecera you">you</p>
+                            <p class="itemCabecera">{{tiempoPublicadoGeneral}}</p>
+                            <div class="itemCabecera replyComentarioPublicado">
+                                <div (click)="alertaEliminaGeneral()" class="delete opcionUser" [ngStyle]="{'opacity':opacityGeneral}">
+                                    <img src="../assets/images/icon-delete.svg" alt="icon-delete">
+                                    <p>Delete</p>
+                                </div>
+                                <div (click)="comentarioEnActualizacionGeneral=true;comentarioVisibleGeneral=false" class="edit opcionUser" [ngStyle]="{'opacity':opacityGeneral}">
+                                    <img src="../assets/images/icon-edit.svg" alt="icon-edit">
+                                    <p>Edit</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Comentario publicado-->
+                        <div class="txtComent" *ngIf="comentarioVisibleGeneral">
+                            <p>{{inputGeneraltxt}}</p>
+                        </div>
+                        <!-- Actualizacion del comentario 'edit'-->
+                        <div class="updatetxt" *ngIf="comentarioEnActualizacionGeneral">
+                            <textarea class="textareaActualizacion" [(ngModel)]="inputGeneraltxt" name="cajaTextoGeneral" id="cajaTextoGeneral" cols="10" rows="10"></textarea>
+                            <button (click)="updateGeneral()">UPDATE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!--Alerta de eliminar mensaje-->
