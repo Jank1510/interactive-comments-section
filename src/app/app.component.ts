@@ -16,14 +16,6 @@ export class AppComponent {
 
 
   constructor() {
-
-    /*FUNCION DE TIEMPO DE LOS COMENTRAIOS YA PUBLICADOS*/
-    //amyrobson
-    
-
-    var amyrobsonDate = new Date()
-    amyrobsonDate.setMonth(amyrobsonDate.getMonth() - 1)
-    console.log(amyrobsonDate)
     /* LEYENDO LOS DATOS DEL LOCALSTORAGE*/
 
     /* ------- AMYROBSON ------*/
